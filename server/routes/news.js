@@ -1,134 +1,71 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
 const router = express.Router();
 
-// Endpoint para fazer scraping real das notícias do Globo Esporte
+// Endpoint para retornar notícias estáticas (scraping removido para evitar problemas com imagens)
 router.get('/news/feminine-football', async (req, res) => {
   try {
-    // Detecta se está em Windows ou Linux
-    const isWindows = process.platform === 'win32';
-    
-    // Args diferentes para Windows (local) vs Linux (produção)
-    const browserArgs = isWindows 
-      ? [
-          // Args para Windows (desenvolvimento local)
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run'
-        ]
-      : [
-          // Args para Linux (produção - Railway/Render)
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run',
-          '--no-zygote',
-          '--single-process',
-          '--disable-gpu'
-        ];
-    
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: browserArgs
-    });
-    
-    const page = await browser.newPage();
-    
-    // Configurar user agent para evitar bloqueios
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
-    
-    await page.goto('https://ge.globo.com/futebol/futebol-feminino/', {
-      waitUntil: 'networkidle2',
-      timeout: 60000
-    });
-    
-    // Aguarda um pouco mais para garantir que conteúdo carregou
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    const newsData = await page.evaluate(() => {
-      const posts = document.querySelectorAll('.feed-post-body');
-      
-      return Array.from(posts).slice(0, 6).map((post, index) => {
-        // Buscar título - tentando diferentes seletores
-        let title = '';
-        const titleSelectors = [
-          '.feed-post-link-reset',
-          '.feed-post-link-reset h2',
-          '.feed-post-link-reset span',
-          '.bstn-fd-title',
-          '.bstn-fd-title h2',
-          '.bstn-fd-title span',
-          'h2',
-          '.feed-post-title',
-          'a[href*="/futebol/futebol-feminino/"]'
-        ];
-        
-        for (const selector of titleSelectors) {
-          const titleElement = post.querySelector(selector);
-          if (titleElement && titleElement.textContent.trim()) {
-            title = titleElement.textContent.trim();
-            break;
-          }
-        }
-        
-        // Buscar resumo
-        const excerptElement = post.querySelector('.feed-post-body-resumo');
-        const excerpt = excerptElement ? excerptElement.textContent.trim() : '';
-        
-        // Buscar imagem seguindo a hierarquia completa
-        const mediaWrapper = post.querySelector('.feed-media-wrapper');
-        let imageSrc = '';
-        
-        if (mediaWrapper) {
-          const link = mediaWrapper.querySelector('a');
-          if (link) {
-            const itemCover = link.querySelector('.bstn-fd-item-cover');
-            if (itemCover) {
-              const picture = itemCover.querySelector('picture.bstn-fd-cover-picture');
-              if (picture) {
-                const img = picture.querySelector('img');
-                if (img) {
-                  imageSrc = img.src || img.getAttribute('data-src') || '';
-                }
-              }
-            }
-          }
-        }
-        
-        return {
-          id: index + 1,
-          title: title,
-          excerpt: excerpt,
-          image: imageSrc,
-          category: 'futebol feminino',
-          timeAgo: 'Há algumas horas',
-          url: 'https://ge.globo.com/futebol/futebol-feminino/'
-        };
-      });
-    });
-    
-    await browser.close();
-    
-    res.json(newsData);
-  } catch (error) {
-    console.error('❌ Erro ao fazer scraping:', error.message);
-    console.error('Stack:', error.stack);
-    
-    // Fallback com dados estáticos se o scraping falhar
-    const fallbackData = [
+    // Dados estáticos de notícias do futebol feminino
+    const newsData = [
       {
         id: 1,
         title: "CT exclusivo, renovações e novos parceiros: os planos de Stabile para o time feminino do Corinthians",
         excerpt: "Presidente revela desejo de construir espaço para treino das Brabas e quer comprar terreno ao lado do local utilizado pelo elenco masculino",
-        image: "https://s2.glbimg.com/example-corinthians-ct-real.jpg",
+        image: "https://via.placeholder.com/600x400/8620AD/ffffff?text=Corinthians",
         category: "corinthians",
         timeAgo: "Há 10 horas",
+        url: "https://ge.globo.com/futebol/futebol-feminino/"
+      },
+      {
+        id: 2,
+        title: "Oitavas de final da Copa do Brasil Feminina 2025: veja jogos e onde assistir",
+        excerpt: "Partidas ocorrem nos dias 16, 17 e 18 de setembro, em jogos únicos, que valem vaga nas quartas de final",
+        image: "https://via.placeholder.com/600x400/8620AD/ffffff?text=Copa+do+Brasil",
+        category: "copa do brasil feminina",
+        timeAgo: "Há 17 horas",
+        url: "https://ge.globo.com/futebol/futebol-feminino/"
+      },
+      {
+        id: 3,
+        title: "Libertadores Feminina: torneio terá VAR em todas as partidas pela primeira vez na história",
+        excerpt: "Confederação Sul-Americana de Futebol anuncia uso da tecnologia em todas as fases da competição",
+        image: "https://via.placeholder.com/600x400/8620AD/ffffff?text=Libertadores",
+        category: "libertadores feminina",
+        timeAgo: "Há 1 dia",
+        url: "https://ge.globo.com/futebol/futebol-feminino/"
+      },
+      {
+        id: 4,
+        title: "Brasileirão Feminino: confira as artilheiras da temporada 2025",
+        excerpt: "Competição reúne as melhores jogadoras do país em busca do título nacional",
+        image: "https://via.placeholder.com/600x400/8620AD/ffffff?text=Brasileirão",
+        category: "brasileiro feminino",
+        timeAgo: "Há 2 dias",
+        url: "https://ge.globo.com/futebol/futebol-feminino/"
+      },
+      {
+        id: 5,
+        title: "Seleção Brasileira Feminina: convocadas para amistosos internacionais",
+        excerpt: "Técnica anuncia lista de jogadoras que vão representar o país nos próximos compromissos",
+        image: "https://via.placeholder.com/600x400/8620AD/ffffff?text=Seleção",
+        category: "futebol feminino",
+        timeAgo: "Há 3 dias",
+        url: "https://ge.globo.com/futebol/futebol-feminino/"
+      },
+      {
+        id: 6,
+        title: "Times femininos investem em infraestrutura para temporada 2025",
+        excerpt: "Clubes ampliam estrutura e investem em centros de treinamento para equipes femininas",
+        image: "https://via.placeholder.com/600x400/8620AD/ffffff?text=Infraestrutura",
+        category: "futebol feminino",
+        timeAgo: "Há 4 dias",
         url: "https://ge.globo.com/futebol/futebol-feminino/"
       }
     ];
     
-    res.json(fallbackData);
+    res.json(newsData);
+  } catch (error) {
+    console.error('❌ Erro ao retornar notícias:', error.message);
+    res.status(500).json({ error: 'Erro ao carregar notícias' });
   }
 });
 

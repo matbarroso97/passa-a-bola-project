@@ -72,11 +72,11 @@ export default function Noticias() {
                       onError={(e) => {
                         // Fallback com imagem temática baseada na categoria
                         const fallbackImages = {
-                          'corinthians': 'https://s2.glbimg.com/example-corinthians-ct-real.jpg',
-                          'copa do brasil feminina': 'https://s2.glbimg.com/example-copa-brasil-real.jpg',
-                          'libertadores feminina': 'https://s2.glbimg.com/example-libertadores-real.jpg',
-                          'brasileiro feminino': 'https://s2.glbimg.com/example-artilheiras-real.jpg',
-                          'futebol feminino': 'https://s2.glbimg.com/example-feminine-football-real.jpg'
+                          'corinthians': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Corinthians',
+                          'copa do brasil feminina': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Copa+do+Brasil',
+                          'libertadores feminina': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Libertadores',
+                          'brasileiro feminino': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Brasileirão',
+                          'futebol feminino': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Futebol+Feminino'
                         };
                         e.target.src = fallbackImages[article.category] || `https://via.placeholder.com/300x200/8620AD/ffffff?text=${encodeURIComponent(article.category)}`;
                       }}
