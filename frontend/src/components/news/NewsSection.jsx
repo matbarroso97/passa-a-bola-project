@@ -1,0 +1,62 @@
+import React from 'react';
+import NewsCard from './NewsCard';
+
+export default function NewsSection({ featuredNews, otherNews, loading = false }) {
+  return (
+    <section className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-2xl">
+      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Principais Notícias</h3>
+      
+      {/* Loading State */}
+      {loading && !featuredNews && (
+        <div className="flex flex-col items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+          <p className="text-gray-600 text-sm">Carregando notícias...</p>
+        </div>
+      )}
+      
+      {/* Notícia em Destaque */}
+      {featuredNews && (
+        <div className="mb-6">
+          <article className="border-2 border-purple-600 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+            <div className="h-48 sm:h-56 relative">
+              <img 
+                src={featuredNews.image} 
+                alt={featuredNews.title}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                DESTAQUE
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-5">
+                <time className="text-xs text-white/80 mb-2 block">{featuredNews.timeAgo}</time>
+                <h4 className="font-bold text-white text-base sm:text-lg mb-2 line-clamp-2">
+                  {featuredNews.title}
+                </h4>
+                <p className="text-xs sm:text-sm text-white/90 line-clamp-2">
+                  {featuredNews.excerpt}
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      )}
+
+      {/* Grid de outras notícias - 2 colunas */}
+      {otherNews.length > 0 && (
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          {otherNews.map((article, index) => (
+            <NewsCard key={index} article={article} />
+          ))}
+        </div>
+      )}
+
+      <div className="mt-6 text-right">
+        <a href="/noticias" className="text-purple-600 font-semibold hover:underline text-sm">
+          Ver todas as notícias →
+        </a>
+      </div>
+    </section>
+  );
+}
+

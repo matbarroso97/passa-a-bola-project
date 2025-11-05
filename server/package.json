@@ -1,0 +1,20 @@
+{
+  "name": "passa-a-bola-api",
+  "version": "1.0.0",
+  "description": "API backend para Passa a Bola",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "seed": "node db/seed.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "axios": "^1.12.2",
+    "cheerio": "^1.1.2",
+    "puppeteer": "^24.21.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
