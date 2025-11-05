@@ -235,6 +235,17 @@
         "role": "admin"
       },
       "createdAt": 1762299251345
+    },
+    {
+      "token": "token_1762305653066_l0a1aztuc",
+      "userId": 1,
+      "user": {
+        "id": 1,
+        "name": "Administrador",
+        "email": "admin@passabola.com",
+        "role": "admin"
+      },
+      "createdAt": 1762305653066
     }
   ]
 }

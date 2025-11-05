@@ -180,7 +180,6 @@ O projeto usa **JSON File System** como banco de dados (`server/db/db.json`):
 
 As notícias são **estáticas e gerenciadas manualmente** no backend:
 
-- ✅ Sem dependências externas (scraping removido)
 - ✅ Dados armazenados diretamente no código
 - ✅ Sem erros de carregamento de imagens externas
 - ✅ Fácil de adicionar/editar notícias no arquivo `server/routes/news.js`
