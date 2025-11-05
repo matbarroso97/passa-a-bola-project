@@ -237,7 +237,7 @@
       "createdAt": 1762299251345
     },
     {
-      "token": "token_1762355253585_zhe0ejxv5",
+      "token": "token_1762363564562_q2enssrl0",
       "userId": 1,
       "user": {
         "id": 1,
@@ -245,7 +245,7 @@
         "email": "admin@passabola.com",
         "role": "admin"
       },
-      "createdAt": 1762355253586
+      "createdAt": 1762363564562
     }
   ]
 }

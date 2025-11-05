@@ -5,10 +5,13 @@ import GameList from './GameList';
 
 export default function GamesSection({ games, onGameClick }) {
   return (
-    <article className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-      <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Jogos</h2>
-        <DateNavigation currentDate="Hoje" />
+    <article className="bg-white rounded-xl shadow-sm border border-gray-50 p-5 sm:p-6 lg:p-7 hover:shadow transition-all duration-300">
+      <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 border-b border-gray-200">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Jogos</h2>
+          <p className="text-xs sm:text-sm text-gray-500 mt-1">Ao vivo, próximos e finalizados</p>
+        </div>
+        <DateNavigation currentDate="Hoje" compact={true} />
       </div>
       
       <CompetitionHeader

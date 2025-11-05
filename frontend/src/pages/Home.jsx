@@ -32,8 +32,7 @@ export default function Home() {
       .then((data) => {
         setGames(data);
       })
-      .catch((err) => {
-        console.error('Erro ao carregar jogos:', err);
+      .catch(() => {
         setGames([]);
       });
 
@@ -49,37 +48,43 @@ export default function Home() {
   const otherNews = news.slice(1, 5);
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 sm:pt-4 pb-8 sm:pb-12">
       <HeroBanner />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mt-8 sm:mt-10 lg:mt-12">
         {/* Left Column - Games and News */}
-        <section className="lg:col-span-2 space-y-4 sm:space-y-6">
-          <FeaturedGameCard 
-            game={featuredGame}
-            onGameClick={(game) => {
-              setSelectedGame(game);
-              setShowModal(true);
-            }}
-          />
+        <section className="lg:col-span-2 space-y-6 sm:space-y-8">
+          <div className="animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+            <FeaturedGameCard 
+              game={featuredGame}
+              onGameClick={(game) => {
+                setSelectedGame(game);
+                setShowModal(true);
+              }}
+            />
+          </div>
 
-          <GamesSection 
-            games={otherGames}
-            onGameClick={(game) => {
-              setSelectedGame(game);
-              setShowModal(true);
-            }}
-          />
+          <div className="animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+            <GamesSection 
+              games={otherGames}
+              onGameClick={(game) => {
+                setSelectedGame(game);
+                setShowModal(true);
+              }}
+            />
+          </div>
 
-          <NewsSection 
-            featuredNews={featuredNews}
-            otherNews={otherNews}
-            loading={newsLoading}
-          />
+          <div className="animate-fadeIn" style={{ animationDelay: '0.3s' }}>
+            <NewsSection 
+              featuredNews={featuredNews}
+              otherNews={otherNews}
+              loading={newsLoading}
+            />
+          </div>
         </section>
 
         {/* Right Column - Sidebar */}
-        <aside className="lg:sticky lg:top-4 lg:self-start space-y-3 sm:space-y-4">
+        <aside className="lg:sticky lg:top-6 lg:self-start space-y-4 sm:space-y-5 lg:space-y-6">
           <FantasyBanner />
           <MainCompetition />
           <RankingsList />

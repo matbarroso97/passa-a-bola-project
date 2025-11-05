@@ -1,16 +1,14 @@
 import React from 'react';
 
 export default function NewsCard({ article }) {
-  // Componente de notícia sem imagens externas
   const handleImageError = (e) => {
-    // Se a imagem falhar, esconde o elemento
     e.target.style.display = 'none';
   };
 
   return (
-    <article className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
+    <article className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full flex flex-col bg-white">
       {article.image && (
-        <div className="h-28 sm:h-32 relative flex-shrink-0">
+        <div className="h-28 sm:h-32 relative flex-shrink-0 overflow-hidden">
           <img 
             src={article.image} 
             alt={article.title}
@@ -18,7 +16,7 @@ export default function NewsCard({ article }) {
             loading="lazy"
             onError={handleImageError}
           />
-          <div className="absolute top-1.5 left-1.5 bg-black/70 text-white px-1.5 py-0.5 rounded text-[10px] font-medium">
+          <div className="absolute top-1.5 left-1.5 bg-black/70 text-white px-1.5 py-0.5 rounded text-[10px] font-medium z-10">
             {article.category}
           </div>
         </div>
@@ -43,5 +41,3 @@ export default function NewsCard({ article }) {
     </article>
   );
 }
-
-

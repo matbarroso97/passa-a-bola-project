@@ -11,23 +11,39 @@ export default function FeaturedGameCard({ game, onGameClick }) {
   const isToday = gameDate && gameDate.toDateString() === now.toDateString();
   const isLive = hasScore && isToday;
 
+  // Formata data e hora
+  const formatDateTime = () => {
+    if (!gameDate) return null;
+    const dateStr = gameDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+    const timeStr = gameDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    return { date: dateStr, time: timeStr };
+  };
+
+  const dateTime = formatDateTime();
+
+  // Informações da competição (pode vir do game ou usar padrão)
+  const competition = game.competition || 'Brasileirão Feminino';
+  const competitionIcon = game.competitionIcon || '/assets/icons/brasileiraofem.png';
+  const round = game.round || 13;
+
   const getStatusBadge = () => {
     if (isLive) {
       return (
-        <span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold animate-pulse">
+        <span className="bg-red-500 text-white px-3 sm:px-4 py-1.5 rounded-full text-xs font-bold animate-pulse flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-white rounded-full animate-ping"></span>
           AO VIVO
         </span>
       );
     } else if (hasScore) {
       return (
-        <span className="bg-gray-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold">
-          FINALIZADO
+        <span className="bg-gray-500/80 text-white px-3 sm:px-4 py-1.5 rounded-full text-xs font-medium">
+          Finalizado
         </span>
       );
     } else if (gameDate && gameDate > now) {
       return (
-        <span className="bg-blue-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold">
-          AGENDADO
+        <span className="bg-blue-500/80 text-white px-3 sm:px-4 py-1.5 rounded-full text-xs font-medium">
+          Agendado
         </span>
       );
     }
@@ -35,21 +51,47 @@ export default function FeaturedGameCard({ game, onGameClick }) {
   };
 
   return (
-    <article className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white rounded-lg shadow-lg overflow-hidden">
-      <div className="p-3 sm:p-4 md:p-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 sm:mb-4 gap-2">
-          <div className="flex items-center space-x-2">
+    <article className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg overflow-hidden border border-purple-500/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+      <div className="p-4 sm:p-5 md:p-6">
+        {/* Header com contexto */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-5 gap-3">
+          <div className="flex items-center space-x-3">
             <img 
-              src="/assets/icons/brasileiraofem.png" 
-              alt="Brasileirão Feminino"
-              className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+              src={competitionIcon} 
+              alt={competition}
+              className="w-6 h-6 sm:w-7 sm:h-7 object-contain"
+              loading="lazy"
             />
-            <span className="text-xs sm:text-sm font-medium opacity-90">Jogo em Destaque</span>
+            <div className="flex flex-col">
+              <span className="text-xs sm:text-sm font-semibold opacity-95">Jogo em Destaque</span>
+              <span className="text-xs opacity-80">{competition} • Rodada {round}</span>
+            </div>
           </div>
           {getStatusBadge()}
         </div>
+
+        {/* Data e hora */}
+        {dateTime && (
+          <div className="mb-4 pb-4 border-b border-white/20">
+            <div className="flex items-center gap-2 text-sm opacity-90">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>{dateTime.date}</span>
+              {gameDate && gameDate > now && (
+                <>
+                  <span>•</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>{dateTime.time}</span>
+                </>
+              )}
+            </div>
+          </div>
+        )}
         <div 
-          className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 cursor-pointer hover:bg-white/20 transition-colors"
+          className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-6 cursor-pointer hover:bg-white/20 transition-all duration-300 hover:scale-[1.02]"
           onClick={() => onGameClick(game)}
         >
           {/* Mobile Layout */}
@@ -120,6 +162,20 @@ export default function FeaturedGameCard({ game, onGameClick }) {
               )}
             </div>
           </div>
+        </div>
+
+        {/* Link Ver Detalhes */}
+        <div className="mt-4 sm:mt-5 pt-4 border-t border-white/20">
+          <button
+            onClick={() => onGameClick(game)}
+            className="w-full sm:w-auto bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2.5 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 min-h-[44px] focus:outline-none focus:ring-4 focus:ring-white/30"
+            aria-label="Ver detalhes do jogo"
+          >
+            <span>Ver detalhes</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </div>
     </article>

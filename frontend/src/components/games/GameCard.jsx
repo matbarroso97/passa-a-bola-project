@@ -6,7 +6,7 @@ export default function GameCard({ game, onClick }) {
 
   return (
     <li 
-      className="p-3 sm:p-4 border-b border-purple-800 last:border-b-0 relative cursor-pointer hover:bg-gray-50 transition-colors"
+      className="p-3 sm:p-4 border-b border-purple-800 last:border-b-0 relative cursor-pointer hover:bg-purple-50/50 transition-all duration-200 hover:pl-5"
       onClick={onClick}
     >
       <div className="flex items-center justify-between flex-wrap gap-2">

@@ -6,6 +6,8 @@ Uma plataforma completa para acompanhar futebol feminino, com tabelas, jogos, no
 
 ## 🎯 Sobre o Projeto
 
+🔗 Deploy: [`https://passa-a-bola-project.vercel.app/`](https://passa-a-bola-project.vercel.app/)
+
 **Passa a Bola** é uma plataforma web moderna desenvolvida para acompanhar o futebol feminino brasileiro e internacional. O projeto foi desenvolvido como parte do Challenge da FIAP em parceria com a empresa Passa a Bola. O projeto inclui:
 
 - 📊 **Tabelas de Classificação** - Acompanhe a posição dos times
@@ -50,7 +52,7 @@ cd passa-a-bola-project
 npm run install:all
 ```
 
-Este comando instala as dependências do projeto raiz (backend) e do frontend.
+Este comando instala as dependências do projeto raiz, frontend e servidor.
 
 ### 3. Configure o banco de dados
 
@@ -131,6 +133,9 @@ passa-a-bola-project/
 - `GET /api/news/feminine-football` - Notícias estáticas
 
 ## 🧪 Desenvolvimento
+
+### 🌐 Deploy
+- Frontend (Vercel): [`https://passa-a-bola-project.vercel.app/`](https://passa-a-bola-project.vercel.app/)
 
 ### Scripts Disponíveis
 

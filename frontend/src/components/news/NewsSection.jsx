@@ -3,8 +3,11 @@ import NewsCard from './NewsCard';
 
 export default function NewsSection({ featuredNews, otherNews, loading = false }) {
   return (
-    <section className="bg-white rounded-lg shadow-sm p-4 sm:p-6 max-w-2xl">
-      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Principais Notícias</h3>
+    <section className="bg-white rounded-xl shadow-sm border border-gray-50 p-5 sm:p-6 lg:p-7 max-w-2xl hover:shadow transition-all duration-300">
+      <div className="mb-4 sm:mb-6 pb-3 border-b border-gray-200">
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Principais Notícias</h3>
+        <p className="text-xs sm:text-sm text-gray-500 mt-1">Últimas notícias do futebol feminino</p>
+      </div>
       
       {/* Loading State */}
       {loading && !featuredNews && (
@@ -17,9 +20,9 @@ export default function NewsSection({ featuredNews, otherNews, loading = false }
       {/* Notícia em Destaque */}
       {featuredNews && (
         <div className="mb-6">
-          <article className="border-2 border-purple-600 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+          <article className="border-2 border-purple-600 rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
             {featuredNews.image ? (
-              <div className="h-48 sm:h-56 relative">
+              <div className="h-48 sm:h-56 relative overflow-hidden">
                 <img 
                   src={featuredNews.image} 
                   alt={featuredNews.title}
@@ -27,8 +30,14 @@ export default function NewsSection({ featuredNews, otherNews, loading = false }
                   loading="lazy"
                   onError={(e) => {
                     e.target.style.display = 'none';
+                    const fallback = e.target.parentElement.querySelector('.image-fallback');
+                    if (fallback) fallback.style.display = 'flex';
                   }}
                 />
+                {/* Fallback se a imagem falhar */}
+                <div className="image-fallback hidden absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 items-center justify-center">
+                  <span className="text-white text-lg font-bold">⚽</span>
+                </div>
                 <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold">
                   DESTAQUE
                 </div>

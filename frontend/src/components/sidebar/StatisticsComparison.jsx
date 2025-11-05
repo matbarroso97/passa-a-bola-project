@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function StatisticsComparison() {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-shadow">
       <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Comparar estatísticas</h3>
       <div className="space-y-3">
         <input
@@ -25,6 +25,7 @@ export default function StatisticsComparison() {
     </div>
   );
 }
+
 
 
 

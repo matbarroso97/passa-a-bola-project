@@ -9,12 +9,12 @@ const competitionNames = {
 
 export default function FavoriteTeams({ teams, onAdd, onRemove }) {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-shadow">
       <div className="flex items-center justify-between mb-4 gap-2 sm:gap-0 sm:flex-nowrap">
         <h3 className="text-lg font-bold text-gray-900 whitespace-nowrap">Meus Times Favoritos</h3>
         <button
           onClick={onAdd}
-          className="px-2 sm:px-2 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-xs sm:text-sm font-semibold flex-shrink-0"
+          className="px-2 sm:px-1 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-xs sm:text-sm font-semibold flex-shrink-0"
         >
           + Adicionar
         </button>
