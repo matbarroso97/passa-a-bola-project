@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function FantasyBanner() {
   return (
-    <div className="text-white rounded-lg p-3 shadow-md border border-purple-700/30" style={{backgroundColor: '#8620AD'}}>
+    <div className="bg-brand text-white rounded-lg p-3 shadow-md border border-purple-700/30">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <img 
@@ -17,8 +17,3 @@ export default function FantasyBanner() {
     </div>
   );
 }
-
-
-
-
-

@@ -51,7 +51,7 @@ export default function FeaturedGameCard({ game, onGameClick }) {
   };
 
   return (
-    <article className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg overflow-hidden border border-purple-500/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+    <article className="bg-brand-to-blue-gradient text-white rounded-xl shadow-lg overflow-hidden border border-purple-500/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       <div className="p-4 sm:p-5 md:p-6">
         {/* Header com contexto */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-5 gap-3">

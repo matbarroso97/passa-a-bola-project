@@ -8,8 +8,11 @@ import CompetitionSelector from "../components/fantasy/CompetitionSelector";
 import StatsCards from "../components/fantasy/StatsCards";
 import CompetitionCard from "../components/fantasy/CompetitionCard";
 import Leaderboard from "../components/fantasy/Leaderboard";
+import Toast from "../components/ui/Toast";
+import useToast from "../hooks/useToast";
 
 export default function Fantasy() {
+  const { toasts, hideToast, info } = useToast();
   const [selectedCompetition, setSelectedCompetition] = useState('brasileirao');
   const [leaderboard, setLeaderboard] = useState([]);
   const [layout, setLayout] = useState('grid'); // 'grid' ou 'list'
@@ -92,8 +95,7 @@ export default function Fantasy() {
 
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <FantasyBanner onStart={() => {
-            // Funcionalidade de criação de equipe será implementada em breve
-            alert('Funcionalidade de criação de equipe será implementada em breve!');
+            info('Funcionalidade de criação de equipe será implementada em breve!', 4000);
           }} />
           <HowItWorks />
         </section>
@@ -130,7 +132,7 @@ export default function Fantasy() {
         <div className="mt-12 text-center">
           <button
             onClick={() => setShowDashboard(!showDashboard)}
-            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold text-lg shadow-md"
+            className="px-6 py-3 btn-brand rounded-lg transition-colors font-semibold text-lg shadow-md hover:shadow-lg"
           >
             {showDashboard ? 'Ocultar Estatísticas de Desempenho' : 'Ver Minhas Estatísticas de Desempenho'}
           </button>
@@ -338,9 +340,17 @@ export default function Fantasy() {
           />
         </section>
       </div>
+
+      {/* Toast Notifications */}
+      {toasts.map(toast => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          duration={toast.duration}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
     </main>
   );
 }
-
-
-

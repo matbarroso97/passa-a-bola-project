@@ -22,6 +22,16 @@ export default function Jogos() {
     { value: 'division1', label: 'Division 1 Féminine', icon: '/assets/icons/division1fem.png' },
   ];
 
+  // Mapeamento de jornadas por competição
+  const competitionRounds = {
+    brasileirao: 13,
+    libertadores: 5,
+    uefa: 8,
+    fa: 12,
+    primera: 15,
+    division1: 10,
+  };
+
 
   useEffect(() => {
     // Simular diferentes jogos para cada competição
@@ -74,7 +84,7 @@ export default function Jogos() {
   }, [selectedCompetition]);
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8" style={{backgroundColor: 'var(--page-bg)'}}>
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8 bg-white">
       <div className="space-y-4 sm:space-y-6">
         {/* Conteúdo principal */}
         <div className="space-y-4 sm:space-y-6">
@@ -112,7 +122,7 @@ export default function Jogos() {
             <CompetitionHeader
               icon={competitionOptions.find(opt => opt.value === selectedCompetition)?.icon || '/assets/icons/brasileiraofem.png'}
               name={competitionOptions.find(opt => opt.value === selectedCompetition)?.label || 'Brasileirão Feminino'}
-              round={13}
+              round={competitionRounds[selectedCompetition] || 13}
             />
 
             <GameList 

@@ -1,13 +1,21 @@
 import React from 'react';
 import GameCard from './GameCard';
+import EmptyState from '../ui/EmptyState';
 
 export default function GameList({ games, onGameClick }) {
   if (games.length === 0) {
     return (
       <ul className="bg-white" role="list">
-        <li className="text-center py-8 text-gray-500">
-          <p>Nenhum jogo encontrado no momento.</p>
-          <p className="text-sm mt-2">Os jogos serão exibidos quando disponíveis.</p>
+        <li>
+          <EmptyState
+            icon={
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            }
+            title="Nenhum jogo encontrado"
+            message="Os jogos serão exibidos quando disponíveis."
+          />
         </li>
       </ul>
     );
@@ -25,8 +33,4 @@ export default function GameList({ games, onGameClick }) {
     </ul>
   );
 }
-
-
-
-
 

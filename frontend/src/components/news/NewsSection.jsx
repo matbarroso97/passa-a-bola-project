@@ -1,5 +1,6 @@
 import React from 'react';
 import NewsCard from './NewsCard';
+import Loading from '../ui/Loading';
 
 export default function NewsSection({ featuredNews, otherNews, loading = false }) {
   return (
@@ -12,8 +13,7 @@ export default function NewsSection({ featuredNews, otherNews, loading = false }
       {/* Loading State */}
       {loading && !featuredNews && (
         <div className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
-          <p className="text-gray-600 text-sm">Carregando notícias...</p>
+          <Loading size="lg" text="Carregando notícias..." />
         </div>
       )}
       
@@ -35,7 +35,7 @@ export default function NewsSection({ featuredNews, otherNews, loading = false }
                   }}
                 />
                 {/* Fallback se a imagem falhar */}
-                <div className="image-fallback hidden absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-800 items-center justify-center">
+                <div className="image-fallback hidden absolute inset-0 bg-brand-gradient-horizontal items-center justify-center">
                   <span className="text-white text-lg font-bold">⚽</span>
                 </div>
                 <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold">
@@ -52,7 +52,7 @@ export default function NewsSection({ featuredNews, otherNews, loading = false }
                 </div>
               </div>
             ) : (
-              <div className="h-48 sm:h-56 relative bg-gradient-to-r from-purple-600 to-purple-800 flex items-center justify-center">
+              <div className="h-48 sm:h-56 relative bg-brand-gradient-horizontal flex items-center justify-center">
                 <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold">
                   DESTAQUE
                 </div>

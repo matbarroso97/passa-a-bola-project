@@ -24,28 +24,28 @@ export default function Layout({ children }) {
               <div className="mt-4">
                 <p className="mb-3 text-sm text-center">Conheça as redes sociais do passa a bola:</p>
                 <div className="flex justify-center space-x-3">
-                  <a href="https://youtube.com" target="_blank" rel="noreferrer" className="hover:opacity-80">
+                  <a href="https://www.youtube.com/@passabola" target="_blank" rel="noreferrer" className="hover:opacity-80 transition-opacity" aria-label="YouTube do Passa a Bola">
                     <img
                       src="/assets/icons/social/youtube.png"
                       alt="YouTube"
                       className="w-8 h-8"
                     />
                   </a>
-                  <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:opacity-80">
+                  <a href="https://www.instagram.com/passaabola/" target="_blank" rel="noreferrer" className="hover:opacity-80 transition-opacity" aria-label="Instagram do Passa a Bola">
                     <img
                       src="/assets/icons/social/instagram.png"
                       alt="Instagram"
                       className="w-8 h-8"
                     />
                   </a>
-                  <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:opacity-80">
+                  <a href="https://www.tiktok.com/@passabola" target="_blank" rel="noreferrer" className="hover:opacity-80 transition-opacity flex items-center" aria-label="TikTok do Passa a Bola">
                     <img
-                      src="/assets/icons/social/twitter.png"
-                      alt="Twitter"
-                      className="w-8 h-8"
+                      src="/assets/icons/social/tiktok.png"
+                      alt="TikTok"
+                      className="w-10 h-10 -mt-1"
                     />
                   </a>
-                  <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:opacity-80">
+                  <a href="https://www.facebook.com/oficialpassaabola/" target="_blank" rel="noreferrer" className="hover:opacity-80 transition-opacity" aria-label="Facebook do Passa a Bola">
                     <img
                       src="/assets/icons/social/facebook.png"
                       alt="Facebook"

@@ -104,7 +104,7 @@ export default function FavoriteTeamForm({ isOpen, onClose, onSubmit }) {
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+              className="flex-1 px-4 py-2 btn-brand rounded-lg transition-colors font-semibold shadow-md hover:shadow-lg"
             >
               Adicionar
             </button>
@@ -114,6 +114,7 @@ export default function FavoriteTeamForm({ isOpen, onClose, onSubmit }) {
     </div>
   );
 }
+
 
 
 

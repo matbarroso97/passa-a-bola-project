@@ -1,11 +1,10 @@
 module.exports = {
-    darkMode: ['class'],
     content: ['./index.html','./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
   	extend: {
   		colors: {
-  			brand: '#7b1fa2',
-  			brandDark: '#5c128f',
+  			brand: '#8620AD',
+  			brandDark: '#6b1a8a',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

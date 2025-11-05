@@ -1,4 +1,5 @@
 import React from 'react';
+import EmptyState from '../ui/EmptyState';
 
 const competitionNames = {
   brasileirao: 'Brasileirão Feminino',
@@ -7,22 +8,49 @@ const competitionNames = {
   fa: 'FA Women\'s Super League'
 };
 
-export default function FavoriteTeams({ teams, onAdd, onRemove }) {
+export default function FavoriteTeams({ teams, onAdd, onRemove, isAuthenticated, onLoginClick }) {
+  // Se não estiver autenticado, mostra mensagem de login
+  if (!isAuthenticated) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow">
+        <h3 className="text-lg font-bold text-gray-900 mb-4">Meus Times Favoritos</h3>
+        <EmptyState
+          icon={
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          }
+          title="Login necessário"
+          message="Faça login para adicionar e gerenciar seus times favoritos"
+          action={onLoginClick}
+          actionLabel="Fazer Login"
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between mb-4 gap-2 sm:gap-0 sm:flex-nowrap">
         <h3 className="text-lg font-bold text-gray-900 whitespace-nowrap">Meus Times Favoritos</h3>
         <button
           onClick={onAdd}
-          className="px-2 sm:px-1 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-xs sm:text-sm font-semibold flex-shrink-0"
+          className="px-2 sm:px-1 py-2 btn-brand rounded-lg transition-colors text-xs sm:text-sm font-semibold flex-shrink-0 shadow-sm hover:shadow-md"
+          aria-label="Adicionar time favorito"
         >
           + Adicionar
         </button>
       </div>
       {teams.length === 0 ? (
-        <div className="text-sm text-gray-500 text-center py-4">
-          Clique em "Adicionar" para adicionar seus times favoritos
-        </div>
+        <EmptyState
+          icon={
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          }
+          title="Nenhum time favorito"
+          message="Clique em 'Adicionar' para adicionar seus times favoritos"
+        />
       ) : (
         <div className="space-y-2">
           {teams.map((team) => (

@@ -11,7 +11,7 @@ const competitions = [
 
 export default function CompetitionsList() {
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow">
       <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Competições</h3>
       <div className="w-full h-px bg-purple-800 mb-4"></div>
       <div className="mb-4">

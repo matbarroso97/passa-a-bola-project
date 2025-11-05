@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNews } from "../hooks/useNews";
+import Loading from "../components/ui/Loading";
 
 export default function Noticias() {
   const { news, loading, error, loadNews, refreshNews } = useNews();
@@ -20,15 +21,12 @@ export default function Noticias() {
 
   if (loading && news.length === 0) {
     return (
-      <main className="min-h-screen" style={{backgroundColor: 'var(--page-bg)'}}>
+      <main className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
           <header>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Notícias</h1>
           </header>
-          <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
-            <p className="text-gray-500 mt-4">Carregando notícias...</p>
-          </div>
+          <Loading size="lg" text="Carregando notícias..." />
         </div>
       </main>
     );
@@ -36,7 +34,7 @@ export default function Noticias() {
 
   if (error) {
     return (
-      <main className="min-h-screen" style={{backgroundColor: 'var(--page-bg)'}}>
+      <main className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
           <header>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Notícias</h1>
@@ -45,7 +43,7 @@ export default function Noticias() {
             <p className="text-red-500 mb-4">{error}</p>
             <button 
               onClick={() => window.location.reload()} 
-              className="bg-purple-600 text-white px-4 sm:px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+              className="btn-brand px-4 sm:px-6 py-2 rounded-lg transition-colors font-semibold"
             >
               Tentar Novamente
             </button>
@@ -56,7 +54,7 @@ export default function Noticias() {
   }
 
   return (
-    <main className="min-h-screen" style={{backgroundColor: 'var(--page-bg)'}}>
+    <main className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <header>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Notícias</h1>
@@ -83,7 +81,7 @@ export default function Noticias() {
                       </div>
                     </div>
                   ) : (
-                    <div className="h-48 bg-gradient-to-r from-purple-600 to-purple-800 flex items-center justify-center relative flex-shrink-0">
+                    <div className="h-48 bg-brand-gradient-horizontal flex items-center justify-center relative flex-shrink-0">
                       <div className="absolute top-3 left-3 bg-black/70 text-white px-2.5 py-1 rounded text-xs font-medium capitalize">
                         {article.category}
                       </div>
@@ -119,7 +117,7 @@ export default function Noticias() {
               <div className="text-center mt-8">
                 <button 
                   onClick={handleLoadMore}
-                  className="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+                  className="btn-brand px-8 py-3 rounded-lg transition-colors font-semibold shadow-md hover:shadow-lg"
                 >
                   Carregar Mais Notícias
                 </button>

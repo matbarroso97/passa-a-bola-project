@@ -6,8 +6,17 @@ export default function GameCard({ game, onClick }) {
 
   return (
     <li 
-      className="p-3 sm:p-4 border-b border-purple-800 last:border-b-0 relative cursor-pointer hover:bg-purple-50/50 transition-all duration-200 hover:pl-5"
+      className="p-3 sm:p-4 border-b border-purple-800 last:border-b-0 relative cursor-pointer hover:bg-purple-50/50 transition-all duration-200 hover:pl-5 focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2"
       onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
+      aria-label={`Jogo: ${game.home} vs ${game.away}`}
     >
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex-1 flex min-w-0">

@@ -22,7 +22,7 @@ export default function NewsCard({ article }) {
         </div>
       )}
       {!article.image && (
-        <div className="h-20 bg-gradient-to-r from-purple-600 to-purple-800 flex items-center justify-center relative">
+        <div className="h-20 bg-brand-gradient-horizontal flex items-center justify-center relative">
           <div className="absolute top-1.5 left-1.5 bg-black/70 text-white px-1.5 py-0.5 rounded text-[10px] font-medium">
             {article.category}
           </div>

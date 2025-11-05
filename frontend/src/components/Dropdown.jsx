@@ -72,4 +72,3 @@ export default function Dropdown({ options, value, onChange, placeholder, icon, 
     </div>
   );
 }
-

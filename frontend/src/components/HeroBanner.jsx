@@ -36,7 +36,7 @@ export default function HeroBanner() {
           </video>
           
           {/* Overlay roxo leve com gradiente */}
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/60 via-purple-800/50 to-purple-900/40 group-hover:from-purple-900/55 group-hover:via-purple-800/45 group-hover:to-purple-900/35 transition-all duration-500"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/30 via-purple-800/25 to-purple-900/20 group-hover:from-purple-900/25 group-hover:via-purple-800/20 group-hover:to-purple-900/15 transition-all duration-500"></div>
           
           {/* Texto no topo */}
           <div className="absolute top-1 sm:top-2 lg:top-3 left-6 sm:left-12 lg:left-16 right-6 sm:right-12 lg:right-16">
@@ -51,7 +51,7 @@ export default function HeroBanner() {
               {/* CTA Primário - Fantasy */}
               <a 
                 href="/fantasy" 
-                className="group/btn bg-purple-600/80 text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl font-semibold hover:bg-purple-600/90 transition-all duration-300 text-sm sm:text-base shadow-lg hover:shadow-xl min-h-[44px] flex items-center justify-center backdrop-blur-md"
+                className="group/btn btn-brand-secondary px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base shadow-lg hover:shadow-xl min-h-[44px] flex items-center justify-center backdrop-blur-md"
                 aria-label="Jogar Fantasy - CTA principal"
               >
                 Jogar Fantasy
@@ -92,7 +92,7 @@ export default function HeroBanner() {
           </video>
           
           {/* Overlay roxo leve */}
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-900/65 to-purple-800/55"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-purple-900/35 to-purple-800/30"></div>
           
           {/* Texto no topo */}
           <div className="absolute top-1 left-4 right-4">
@@ -107,7 +107,7 @@ export default function HeroBanner() {
               {/* CTA Primário - Fantasy */}
               <a 
                 href="/fantasy" 
-                className="bg-purple-600/80 text-white px-5 py-3 rounded-xl font-semibold hover:bg-purple-600/90 transition-all duration-300 text-sm text-center shadow-lg min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-purple-300/50 backdrop-blur-md"
+                className="btn-brand-secondary px-5 py-3 rounded-xl font-semibold transition-all duration-300 text-sm text-center shadow-lg min-h-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-white/40 backdrop-blur-md"
                 aria-label="Jogar Fantasy - CTA principal"
               >
                 Jogar Fantasy
@@ -124,8 +124,6 @@ export default function HeroBanner() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }
-

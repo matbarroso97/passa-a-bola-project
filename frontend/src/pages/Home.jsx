@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useNews } from "../hooks/useNews";
+import { useAuth } from "../hooks/useAuth";
 import { apiUrl } from "../config/api";
 import HeroBanner from "../components/HeroBanner";
 import FeaturedGameCard from "../components/games/FeaturedGameCard";
@@ -14,8 +16,13 @@ import CompetitionsList from "../components/sidebar/CompetitionsList";
 import RankingsList from "../components/sidebar/RankingsList";
 import BestPlayers from "../components/sidebar/BestPlayers";
 import StatisticsComparison from "../components/sidebar/StatisticsComparison";
+import Toast from "../components/ui/Toast";
+import useToast from "../hooks/useToast";
 
 export default function Home() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { toasts, hideToast, info } = useToast();
   const [games, setGames] = useState([]);
   const { news, loadNews, loading: newsLoading } = useNews();
   const [selectedGame, setSelectedGame] = useState(null);
@@ -93,8 +100,17 @@ export default function Home() {
           <StatisticsComparison />
           <FavoriteTeams
             teams={favoriteTeams}
-            onAdd={() => setShowFormModal(true)}
+            onAdd={() => {
+              if (isAuthenticated) {
+                setShowFormModal(true);
+              } else {
+                info('Faça login para adicionar times favoritos', 3000);
+                setTimeout(() => navigate('/login'), 1000);
+              }
+            }}
             onRemove={(id) => setFavoriteTeams(favoriteTeams.filter(t => t.id !== id))}
+            isAuthenticated={isAuthenticated}
+            onLoginClick={() => navigate('/login')}
           />
         </aside>
       </div>
@@ -114,8 +130,20 @@ export default function Home() {
             ...teamData
           };
           setFavoriteTeams([...favoriteTeams, newTeam]);
+          setShowFormModal(false);
         }}
       />
+
+      {/* Toast Notifications */}
+      {toasts.map(toast => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          duration={toast.duration}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
     </main>
   );
 }

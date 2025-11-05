@@ -3,6 +3,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Dropdown from '../components/Dropdown';
 import { getTeamImage } from '../config/teamImages';
 import { apiUrl } from '../config/api';
+import Loading from '../components/ui/Loading';
 
 export default function Tabela() {
   const [ranking, setRanking] = useState([]);
@@ -13,6 +14,8 @@ export default function Tabela() {
   const [selectedCompetition, setSelectedCompetition] = useState('Brasileirão Feminino');
   const [selectedCompetitionTeams, setSelectedCompetitionTeams] = useState('Brasileirão Feminino');
   const [selectedStatTeams, setSelectedStatTeams] = useState('Gols');
+  const [selectedYear, setSelectedYear] = useState('2025');
+  const [selectedYearTeams, setSelectedYearTeams] = useState('2025');
 
   // Dados das jogadoras com todas as estatísticas
   const playersStats = {
@@ -259,7 +262,7 @@ export default function Tabela() {
   }, []);
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8" style={{backgroundColor: 'white'}}>
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8 bg-white">
       <div className="space-y-4 sm:space-y-6">
         
         {/* Tabela de classificação */}
@@ -277,15 +280,14 @@ export default function Tabela() {
           </header>
           {loading ? (
             <div className="text-center py-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
-              <p className="text-gray-500 mt-4">Carregando tabela...</p>
+              <Loading size="md" text="Carregando tabela..." />
             </div>
           ) : error ? (
             <div className="text-center py-8">
               <p className="text-red-500 mb-4">{error}</p>
               <button 
                 onClick={() => window.location.reload()} 
-                className="bg-purple-600 text-white px-4 sm:px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                className="btn-brand px-4 sm:px-6 py-2 rounded-lg transition-colors font-semibold"
               >
                 Tentar Novamente
               </button>
@@ -513,7 +515,7 @@ export default function Tabela() {
         {/* Grid 2x2 - Melhores Jogadoras, Melhores Equipes, Recordes, Informações da Liga */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {/* Melhores Jogadoras */}
-          <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-green-500" style={{ overflow: 'visible' }}>
+          <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-purple-500 overflow-visible">
             <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Melhores Jogadoras</h3>
             
             {/* Container com selects */}
@@ -529,8 +531,8 @@ export default function Tabela() {
                 />
                 <Dropdown
                   options={yearOptions}
-                  value="2025"
-                  onChange={() => {}}
+                  value={selectedYear}
+                  onChange={setSelectedYear}
                   placeholder="Ano"
                 />
               </div>
@@ -544,7 +546,7 @@ export default function Tabela() {
               />
             </div>
             
-            {selectedCompetition === 'Libertadores Feminina' || selectedCompetition === 'Copa do Brasil Feminina' ? (
+            {selectedCompetition === 'Libertadores Feminina' || selectedCompetition === 'Copa do Brasil Feminina' || selectedYear !== '2025' ? (
               <div className="text-center py-12">
                 <div className="flex flex-col items-center justify-center space-y-4">
                   <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -596,7 +598,7 @@ export default function Tabela() {
           </div>
 
           {/* Melhores Equipes */}
-          <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-green-500" style={{ overflow: 'visible' }}>
+          <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-purple-500 overflow-visible">
             <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Melhores Equipes</h3>
             
             {/* Container com selects */}
@@ -612,8 +614,8 @@ export default function Tabela() {
                 />
                 <Dropdown
                   options={yearOptions}
-                  value="2025"
-                  onChange={() => {}}
+                  value={selectedYearTeams}
+                  onChange={setSelectedYearTeams}
                   placeholder="Ano"
                 />
               </div>
@@ -627,7 +629,7 @@ export default function Tabela() {
               />
             </div>
             
-            {selectedCompetitionTeams === 'Libertadores Feminina' || selectedCompetitionTeams === 'Copa do Brasil Feminina' ? (
+            {selectedCompetitionTeams === 'Libertadores Feminina' || selectedCompetitionTeams === 'Copa do Brasil Feminina' || selectedYearTeams !== '2025' ? (
               <div className="text-center py-12">
                 <div className="flex flex-col items-center justify-center space-y-4">
                   <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -645,7 +647,7 @@ export default function Tabela() {
                   return (
                     <div 
                       key={teamName} 
-                      className={`flex items-center justify-between py-2 gap-3 ${isLast ? '' : 'border-b border-purple-800'}`}
+                      className={`flex items-center justify-between py-3 gap-3 ${isLast ? '' : 'border-b border-purple-800'}`}
                     >
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
                         {getTeamImage(teamName) ? (
@@ -667,12 +669,12 @@ export default function Tabela() {
                     </div>
                   );
                 })}
-              </div>
+            </div>
             )}
           </div>
 
           {/* Recordes em um Jogo */}
-          <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-green-500" style={{ overflow: 'visible' }}>
+          <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-purple-500 overflow-visible">
             <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Recordes em um Jogo</h3>
             
             {/* Container com select de estatísticas */}
@@ -725,7 +727,7 @@ export default function Tabela() {
           </div>
 
           {/* Informações da Liga */}
-          <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-green-500">
+          <div className="bg-white rounded-lg shadow-sm p-6 border-2 border-purple-500">
             <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Informações da Liga</h3>
             
             {/* Maior campeão e Atual campeão lado a lado */}
