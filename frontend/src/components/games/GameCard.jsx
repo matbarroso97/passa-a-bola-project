@@ -2,7 +2,7 @@ import React from 'react';
 import { getTeamImage } from '../../config/teamImages';
 
 export default function GameCard({ game, onClick }) {
-  const [homeScore, awayScore] = game.score.split(' x ');
+  const [homeScore, awayScore] = game.score ? game.score.split(' x ') : ['-', '-'];
 
   return (
     <li 
@@ -65,5 +65,7 @@ export default function GameCard({ game, onClick }) {
     </li>
   );
 }
+
+
 
 

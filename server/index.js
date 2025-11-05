@@ -48,12 +48,43 @@ const authenticateToken = (req, res, next) => {
   }
 };
 // Rotas públicas (não requerem autenticação)
-app.get('/api/games', (req,res)=>{ const db = readDB(); res.json(db.games||[]); });
-app.get('/api/teams', (req,res)=>{ const db = readDB(); res.json(db.teams||[]); });
-app.get('/api/ranking', (req,res)=>{ const db = readDB(); res.json(db.ranking||[]); });
+app.get('/api/games', (req,res,next)=>{ 
+  try {
+    const db = readDB(); 
+    res.json(db.games||[]);
+  } catch (error) {
+    next(error);
+  }
+});
+app.get('/api/teams', (req,res,next)=>{ 
+  try {
+    const db = readDB(); 
+    res.json(db.teams||[]);
+  } catch (error) {
+    next(error);
+  }
+});
+app.get('/api/ranking', (req,res,next)=>{ 
+  try {
+    const db = readDB(); 
+    res.json(db.ranking||[]);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.post('/api/auth/login', (req,res)=>{
   const {email,password} = req.body;
+  
+  // Validação básica
+  if (!email || !password) {
+    return res.status(400).json({error: 'Email e senha são obrigatórios'});
+  }
+  
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({error: 'Email inválido'});
+  }
+  
   const db = readDB();
   const user = (db.users||[]).find(u=>u.email===email && u.password===password);
   if(!user) return res.status(401).json({error:'invalid credentials'});
@@ -106,5 +137,14 @@ app.get('/api/auth/verify', authenticateToken, (req,res)=>{
   });
 });
 app.use('/api', newsRoutes);
+
+// Middleware global de tratamento de erros (deve vir por último)
+app.use((err, req, res, next) => {
+  console.error('❌ Erro:', err);
+  res.status(err.status || 500).json({
+    error: err.message || 'Erro interno do servidor'
+  });
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, ()=> console.log('Server rodando na porta', PORT)); 

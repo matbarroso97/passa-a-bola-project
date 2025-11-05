@@ -59,15 +59,6 @@ router.get('/news/feminine-football', async (req, res) => {
         category: "futebol feminino",
         timeAgo: "Há 4 dias",
         url: "#"
-      },
-      {
-        id: 7,
-        title: "Passa a Bola lança nova plataforma para acompanhar futebol feminino",
-        excerpt: "Plataforma oferece tabelas, jogos, estatísticas e muito mais para os fãs do futebol feminino brasileiro",
-        image: null,
-        category: "futebol feminino",
-        timeAgo: "Há 5 dias",
-        url: "#"
       }
     ];
     

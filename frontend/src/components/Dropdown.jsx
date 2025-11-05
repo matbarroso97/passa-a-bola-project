@@ -22,6 +22,9 @@ export default function Dropdown({ options, value, onChange, placeholder, icon, 
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
+        aria-label={placeholder || "Selecionar opção"}
         className={`flex items-center space-x-3 bg-white border border-gray-300 rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 ${className}`}
       >
         {icon && (
@@ -43,11 +46,16 @@ export default function Dropdown({ options, value, onChange, placeholder, icon, 
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-full max-w-[10rem] bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-60 overflow-auto">
+        <div 
+          role="listbox"
+          className="absolute top-full left-0 mt-1 w-full max-w-[10rem] bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-60 overflow-auto"
+        >
           {options.map((option) => (
             <button
               key={option.value}
               type="button"
+              role="option"
+              aria-selected={value === option.value}
               onClick={() => {
                 onChange(option.value);
                 setIsOpen(false);

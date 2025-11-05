@@ -25,11 +25,15 @@ export default function Home() {
 
   useEffect(() => {
     fetch(apiUrl('games'))
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error('Erro ao buscar jogos');
+        return r.json();
+      })
       .then((data) => {
         setGames(data);
       })
       .catch((err) => {
+        console.error('Erro ao carregar jogos:', err);
         setGames([]);
       });
 

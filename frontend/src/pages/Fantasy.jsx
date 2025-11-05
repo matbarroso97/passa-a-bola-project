@@ -92,7 +92,7 @@ export default function Fantasy() {
 
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <FantasyBanner onStart={() => {
-            // TODO: Implementar navegação para criação de equipe quando necessário
+            // Funcionalidade de criação de equipe será implementada em breve
             alert('Funcionalidade de criação de equipe será implementada em breve!');
           }} />
           <HowItWorks />

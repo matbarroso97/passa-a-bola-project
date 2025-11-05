@@ -7,7 +7,6 @@ export default function Noticias() {
   useEffect(() => {
     // Carrega notícias usando o contexto (já tem cache, não recarrega se já tiver)
     loadNews();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLoadMore = async () => {

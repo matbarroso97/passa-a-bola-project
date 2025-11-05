@@ -1,5 +1,5 @@
 // src/pages/Tabela.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Dropdown from '../components/Dropdown';
 import { getTeamImage } from '../config/teamImages';
 import { apiUrl } from '../config/api';
@@ -169,28 +169,34 @@ export default function Tabela() {
     }
   };
 
-  // Ordenar jogadoras baseado na estatística selecionada
-  const getSortedPlayers = (isRecord = false) => {
-    const data = isRecord ? recordsStats : playersStats;
-    const playerNames = Object.keys(data);
-    
+  // Ordenar jogadoras baseado na estatística selecionada (otimizado com useMemo)
+  const sortedPlayers = useMemo(() => {
+    const playerNames = Object.keys(playersStats);
     return playerNames.sort((a, b) => {
-      const statA = getStatValue(a, isRecord ? selectedStatRecords : selectedStat, isRecord);
-      const statB = getStatValue(b, isRecord ? selectedStatRecords : selectedStat, isRecord);
+      const statA = getStatValue(a, selectedStat, false);
+      const statB = getStatValue(b, selectedStat, false);
       return statB - statA; // Ordem decrescente (maior para menor)
     });
-  };
+  }, [selectedStat]);
 
-  // Ordenar equipes baseado na estatística selecionada
-  const getSortedTeams = () => {
+  const sortedPlayersRecords = useMemo(() => {
+    const playerNames = Object.keys(recordsStats);
+    return playerNames.sort((a, b) => {
+      const statA = getStatValue(a, selectedStatRecords, true);
+      const statB = getStatValue(b, selectedStatRecords, true);
+      return statB - statA; // Ordem decrescente (maior para menor)
+    });
+  }, [selectedStatRecords]);
+
+  // Ordenar equipes baseado na estatística selecionada (otimizado com useMemo)
+  const sortedTeams = useMemo(() => {
     const teamNames = Object.keys(teamsStats);
-    
     return teamNames.sort((a, b) => {
       const statA = getTeamStatValue(a, selectedStatTeams);
       const statB = getTeamStatValue(b, selectedStatTeams);
       return statB - statA; // Ordem decrescente (maior para menor)
     });
-  };
+  }, [selectedStatTeams]);
 
   // Mapeamento de competições para ícones
   const competitionIcons = {
@@ -550,9 +556,9 @@ export default function Tabela() {
               </div>
             ) : (
               <div className="space-y-3">
-              {getSortedPlayers(false).map((playerName, index) => {
+              {sortedPlayers.map((playerName, index) => {
                 const player = playersData[playerName];
-                const isLast = index === getSortedPlayers(false).length - 1;
+                const isLast = index === sortedPlayers.length - 1;
                 
                 return (
                   <div 
@@ -633,8 +639,8 @@ export default function Tabela() {
               </div>
             ) : (
               <div className="space-y-3">
-                {getSortedTeams().map((teamName, index) => {
-                  const isLast = index === getSortedTeams().length - 1;
+                {sortedTeams.map((teamName, index) => {
+                  const isLast = index === sortedTeams.length - 1;
                   
                   return (
                     <div 
@@ -680,9 +686,9 @@ export default function Tabela() {
             </div>
             
             <div className="space-y-3">
-              {getSortedPlayers(true).map((playerName, index) => {
+              {sortedPlayersRecords.map((playerName, index) => {
                 const player = playersData[playerName];
-                const isLast = index === getSortedPlayers(true).length - 1;
+                const isLast = index === sortedPlayersRecords.length - 1;
                 
                 return (
                   <div 
