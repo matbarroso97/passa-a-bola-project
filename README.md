@@ -10,7 +10,7 @@ Uma plataforma completa para acompanhar futebol feminino, com tabelas, jogos, no
 
 - 📊 **Tabelas de Classificação** - Acompanhe a posição dos times
 - 🎮 **Jogos ao Vivo** - Visualize partidas e resultados
-- 📰 **Notícias** - Scraping automático do Globo Esporte
+- 📰 **Notícias** - Notícias estáticas sobre futebol feminino
 - 🏆 **Fantasy League** - Sistema de apostas e rankings
 - 🔐 **Autenticação** - Sistema completo com tokens e validação
 
@@ -27,7 +27,6 @@ Uma plataforma completa para acompanhar futebol feminino, com tabelas, jogos, no
 ### Backend
 - **Node.js 18+** - Runtime JavaScript
 - **Express 5.1** - Framework web para Node.js
-- **Puppeteer 24.21** - Web scraping
 - **JSON File System** - Banco de dados (simples para desenvolvimento)
 
 ## 📋 Pré-requisitos
@@ -111,7 +110,7 @@ passa-a-bola-project/
 │   │   ├── db.json          # Dados (usuários, jogos, times, ranking)
 │   │   └── seed.js           # Script de inicialização
 │   ├── routes/              # Rotas da API
-│   │   └── news.js           # Rota de scraping de notícias
+│   │   └── news.js           # Rota de notícias estáticas
 │   ├── index.js             # Servidor Express
 │   └── package.json
 │
@@ -129,7 +128,7 @@ passa-a-bola-project/
 - `GET /api/games` - Lista de jogos
 - `GET /api/teams` - Lista de times
 - `GET /api/ranking` - Tabela de classificação
-- `GET /api/news/feminine-football` - Notícias (scraping)
+- `GET /api/news/feminine-football` - Notícias estáticas
 
 ## 🧪 Desenvolvimento
 
@@ -177,6 +176,15 @@ O projeto usa **JSON File System** como banco de dados (`server/db/db.json`):
 - ✅ Não requer configuração
 - ✅ Funciona perfeitamente para testes e demonstração
 
+## 📰 Notícias
+
+As notícias são **estáticas e gerenciadas manualmente** no backend:
+
+- ✅ Sem dependências externas (scraping removido)
+- ✅ Dados armazenados diretamente no código
+- ✅ Sem erros de carregamento de imagens externas
+- ✅ Fácil de adicionar/editar notícias no arquivo `server/routes/news.js`
+
 ## 🐛 Troubleshooting
 
 ### Erro ao iniciar
@@ -186,10 +194,9 @@ O projeto usa **JSON File System** como banco de dados (`server/db/db.json`):
 ### Porta já em uso
 - Altere a porta no `server/index.js` ou `vite.config.js`
 
-### Scraping não funciona
-- Verifique conexão com internet
-- O sistema usa fallback automático se falhar
-- Primeira execução pode demorar (baixa Chrome do Puppeteer)
+### Notícias não aparecem
+- As notícias são estáticas e gerenciadas manualmente no backend
+- Verifique se o servidor está rodando e acesse `/api/news/feminine-football`
 
 ## 👥 Desenvolvedores
 
