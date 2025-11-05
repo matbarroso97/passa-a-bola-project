@@ -10,9 +10,9 @@ export const apiUrl = (endpoint) => {
   // Remove barra inicial se houver
   const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
   
-  // Se tem VITE_API_URL configurado, usa URL completa
+  // Se tem VITE_API_URL configurado, usa URL completa com /api
   if (API_BASE_URL) {
-    return `${API_BASE_URL}/${cleanEndpoint}`;
+    return `${API_BASE_URL}/api/${cleanEndpoint}`;
   }
   
   // Senão, usa endpoint relativo (funciona com proxy em dev)
