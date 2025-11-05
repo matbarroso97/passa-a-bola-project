@@ -18,26 +18,46 @@ export default function NewsSection({ featuredNews, otherNews, loading = false }
       {featuredNews && (
         <div className="mb-6">
           <article className="border-2 border-purple-600 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="h-48 sm:h-56 relative">
-              <img 
-                src={featuredNews.image} 
-                alt={featuredNews.title}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold">
-                DESTAQUE
+            {featuredNews.image ? (
+              <div className="h-48 sm:h-56 relative">
+                <img 
+                  src={featuredNews.image} 
+                  alt={featuredNews.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+                <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                  DESTAQUE
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-5">
+                  <time className="text-xs text-white/80 mb-2 block">{featuredNews.timeAgo}</time>
+                  <h4 className="font-bold text-white text-base sm:text-lg mb-2 line-clamp-2">
+                    {featuredNews.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-white/90 line-clamp-2">
+                    {featuredNews.excerpt}
+                  </p>
+                </div>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-5">
-                <time className="text-xs text-white/80 mb-2 block">{featuredNews.timeAgo}</time>
-                <h4 className="font-bold text-white text-base sm:text-lg mb-2 line-clamp-2">
-                  {featuredNews.title}
-                </h4>
-                <p className="text-xs sm:text-sm text-white/90 line-clamp-2">
-                  {featuredNews.excerpt}
-                </p>
+            ) : (
+              <div className="h-48 sm:h-56 relative bg-gradient-to-r from-purple-600 to-purple-800 flex items-center justify-center">
+                <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                  DESTAQUE
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:p-5">
+                  <time className="text-xs text-white/80 mb-2 block">{featuredNews.timeAgo}</time>
+                  <h4 className="font-bold text-white text-base sm:text-lg mb-2 line-clamp-2">
+                    {featuredNews.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-white/90 line-clamp-2">
+                    {featuredNews.excerpt}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </article>
         </div>
       )}

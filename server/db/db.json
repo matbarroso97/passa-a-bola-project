@@ -215,17 +215,6 @@
   ],
   "sessions": [
     {
-      "token": "token_1762294223060_ijjejn7va",
-      "userId": 1,
-      "user": {
-        "id": 1,
-        "name": "Administrador",
-        "email": "admin@passabola.com",
-        "role": "admin"
-      },
-      "createdAt": 1762294223060
-    },
-    {
       "token": "token_1762295186725_fclbcjp72",
       "userId": 1,
       "user": {

@@ -64,27 +64,28 @@ export default function Noticias() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {news.map((article) => (
                 <article key={article.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                  <div className="h-48 relative">
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        // Fallback com imagem temática baseada na categoria
-                        const fallbackImages = {
-                          'corinthians': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Corinthians',
-                          'copa do brasil feminina': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Copa+do+Brasil',
-                          'libertadores feminina': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Libertadores',
-                          'brasileiro feminino': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Brasileirão',
-                          'futebol feminino': 'https://via.placeholder.com/600x400/8620AD/ffffff?text=Futebol+Feminino'
-                        };
-                        e.target.src = fallbackImages[article.category] || `https://via.placeholder.com/300x200/8620AD/ffffff?text=${encodeURIComponent(article.category)}`;
-                      }}
-                    />
-                    <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
-                      {article.category}
+                  {article.image ? (
+                    <div className="h-48 relative">
+                      <img
+                        src={article.image}
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                      <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                        {article.category}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="h-48 bg-gradient-to-r from-purple-600 to-purple-800 flex items-center justify-center relative">
+                      <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                        {article.category}
+                      </div>
+                      <span className="text-white text-lg font-bold">⚽</span>
+                    </div>
+                  )}
                   <div className="p-6">
                     <div className="text-xs text-gray-500 mb-2">{article.timeAgo}</div>
                     <h2 className="font-bold text-gray-900 text-lg mb-2 leading-tight">
