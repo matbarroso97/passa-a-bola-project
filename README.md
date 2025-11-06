@@ -189,8 +189,6 @@ O sistema implementa **segurança de nível produção**:
 - 🌐 **CORS** - Apenas origens autorizadas podem acessar a API
 - 🔐 **Bcrypt** - Senhas nunca armazenadas em texto plano
 
-📖 **Documentação completa**: `server/SECURITY.md`
-
 ## 📊 Banco de Dados
 
 O projeto usa **JSON File System** como banco de dados (`server/db/db.json`):
