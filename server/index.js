@@ -9,6 +9,10 @@ const newsRoutes = require('./routes/news');
 const app = express();
 const DATA = path.join(__dirname,'db','db.json');
 
+// ============= CONFIGURAÇÃO DE PROXY =============
+// CRÍTICO para produção (Render, Heroku, etc usam proxy reverso)
+app.set('trust proxy', 1); // Confia no primeiro proxy (necessário para rate limiting)
+
 // ============= MIDDLEWARES DE SEGURANÇA =============
 
 // 1. Helmet - Protege contra vulnerabilidades comuns
