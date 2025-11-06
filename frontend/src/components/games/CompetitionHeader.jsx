@@ -29,3 +29,4 @@ export default function CompetitionHeader({ icon, name, round, subtitle }) {
 
 
 
+

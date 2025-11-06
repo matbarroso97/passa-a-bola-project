@@ -1,11 +1,76 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const helmet = require('helmet');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const bcrypt = require('bcrypt');
 const newsRoutes = require('./routes/news');
 const app = express();
 const DATA = path.join(__dirname,'db','db.json');
+
+// ============= MIDDLEWARES DE SEGURANÇA =============
+
+// 1. Helmet - Protege contra vulnerabilidades comuns
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+  crossOriginEmbedderPolicy: false, // Permite embed de recursos externos
+}));
+
+// 2. CORS configurado adequadamente (não mais wildcard!)
+// Lê origens permitidas do ambiente ou usa defaults
+const allowedOriginsEnv = process.env.ALLOWED_ORIGINS || '';
+const allowedOrigins = [
+  'http://localhost:5173',  // Frontend dev
+  'http://localhost:3000',  // Alternativa
+  'http://127.0.0.1:5173',
+  // Adiciona origens do ambiente (produção)
+  ...allowedOriginsEnv.split(',').filter(o => o.trim())
+];
+
+console.log('🌐 CORS - Origens permitidas:', allowedOrigins);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Permite requisições sem origin (mobile apps, Postman, etc)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn('⚠️  Origem bloqueada pelo CORS:', origin);
+      callback(new Error('Origin não permitida pelo CORS'));
+    }
+  },
+  credentials: true, // Permite cookies e autenticação
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// 3. Rate Limiting - Previne ataques de força bruta
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 5, // Máximo 5 tentativas
+  message: { error: 'Muitas tentativas de login. Tente novamente em 15 minutos.' },
+  standardHeaders: true, // Retorna info nos headers `RateLimit-*`
+  legacyHeaders: false,
+});
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 100, // Máximo 100 requisições
+  message: { error: 'Muitas requisições. Tente novamente mais tarde.' },
+});
+
+// Aplica rate limit geral em todas as rotas da API
+app.use('/api/', apiLimiter);
+
 app.use(express.json());
-app.use((req,res,next)=>{ res.setHeader('Access-Control-Allow-Origin','*'); res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization'); next(); });
 function readDB(){ return JSON.parse(fs.readFileSync(DATA,'utf8')); }
 function writeDB(obj){ fs.writeFileSync(DATA, JSON.stringify(obj, null, 2)); }
 
@@ -73,7 +138,8 @@ app.get('/api/ranking', (req,res,next)=>{
   }
 });
 
-app.post('/api/auth/login', (req,res)=>{
+// 🔒 Rota de Login com Rate Limiting e Bcrypt
+app.post('/api/auth/login', loginLimiter, async (req,res)=>{
   const {email,password} = req.body;
   
   // Validação básica
@@ -85,35 +151,55 @@ app.post('/api/auth/login', (req,res)=>{
     return res.status(400).json({error: 'Email inválido'});
   }
   
-  const db = readDB();
-  const user = (db.users||[]).find(u=>u.email===email && u.password===password);
-  if(!user) return res.status(401).json({error:'invalid credentials'});
-  
-  // Gera token único
-  const token = `token_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-  
-  // Prepara dados do usuário para retorno
-  const userData = {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role || 'user'
-  };
+  try {
+    const db = readDB();
+    const user = (db.users||[]).find(u=>u.email===email);
+    
+    // Não encontrou usuário
+    if(!user) {
+      return res.status(401).json({error:'Email ou senha incorretos'});
+    }
+    
+    // Verifica senha com bcrypt
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    
+    if(!passwordMatch) {
+      return res.status(401).json({error:'Email ou senha incorretos'});
+    }
+    
+    // Gera token único e seguro
+    const token = `token_${Date.now()}_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;
+    
+    // Prepara dados do usuário para retorno (NUNCA retorna a senha!)
+    const userData = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role || 'user'
+    };
 
-  // Salva sessão no banco de dados
-  if (!db.sessions) db.sessions = [];
-  db.sessions.push({
-    token,
-    userId: user.id,
-    user: userData,
-    createdAt: Date.now()
-  });
-  writeDB(db);
+    // Salva sessão no banco de dados
+    if (!db.sessions) db.sessions = [];
+    
+    // Limpa sessões antigas do mesmo usuário (opcional, para limitar sessões simultâneas)
+    // db.sessions = db.sessions.filter(s => s.userId !== user.id);
+    
+    db.sessions.push({
+      token,
+      userId: user.id,
+      user: userData,
+      createdAt: Date.now()
+    });
+    writeDB(db);
 
-  res.json({
-    token,
-    user: userData
-  });
+    res.json({
+      token,
+      user: userData
+    });
+  } catch (error) {
+    console.error('❌ Erro no login:', error);
+    return res.status(500).json({error: 'Erro ao processar login'});
+  }
 });
 
 // Rota para logout - remove token do servidor

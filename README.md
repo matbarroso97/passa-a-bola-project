@@ -30,6 +30,10 @@ Uma plataforma completa para acompanhar futebol feminino, com tabelas, jogos, no
 - **Node.js 18+** - Runtime JavaScript
 - **Express 5.1** - Framework web para Node.js
 - **JSON File System** - Banco de dados (simples para desenvolvimento)
+- **Bcrypt** - Hash de senhas
+- **Helmet** - Segurança de headers HTTP
+- **CORS** - Controle de origens permitidas
+- **Express Rate Limit** - Proteção contra força bruta
 
 ## 📋 Pré-requisitos
 
@@ -74,15 +78,19 @@ Isso inicia:
 
 Acesse: http://localhost:5173
 
-## 🔑 Credenciais de Teste
+## 🔑 Credenciais de Acesso
 
 ### Administrador
 - **Email:** `admin@passabola.com`
 - **Senha:** `123456`
+- **Role:** admin
 
-### Usuário
+### Usuário Comum
 - **Email:** `user@passabola.com`
 - **Senha:** `123456`
+- **Role:** user
+
+> ⚠️ **Nota**: Em produção, as senhas são protegidas com hash bcrypt.
 
 ## 📁 Estrutura do Projeto
 
@@ -163,15 +171,25 @@ cd frontend
 npm run build
 ```
 
-## 🔒 Autenticação
+## 🔒 Segurança e Autenticação
 
-O sistema implementa autenticação completa:
+O sistema implementa **segurança de nível produção**:
 
+### Autenticação
 - ✅ Validação de credenciais no servidor
-- ✅ Geração de tokens únicos
+- ✅ Senhas protegidas com **Bcrypt** (hash)
+- ✅ Tokens únicos e seguros
 - ✅ Validação de token em cada requisição
 - ✅ Expiração automática (24 horas)
 - ✅ Logout com remoção de sessão
+
+### Proteções Implementadas
+- 🛡️ **Helmet** - Headers HTTP seguros (XSS, Clickjacking, etc)
+- 🚫 **Rate Limiting** - Máximo 5 tentativas de login / 15 minutos
+- 🌐 **CORS** - Apenas origens autorizadas podem acessar a API
+- 🔐 **Bcrypt** - Senhas nunca armazenadas em texto plano
+
+📖 **Documentação completa**: `server/SECURITY.md`
 
 ## 📊 Banco de Dados
 

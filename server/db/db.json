@@ -4,14 +4,14 @@
       "id": 1,
       "name": "Administrador",
       "email": "admin@passabola.com",
-      "password": "123456",
+      "password": "$2b$10$XxwWNSnxcbHUTrcvXJsnOOvOc21bU/CjTnw4ZKwdOCbKPq9CaNDFG",
       "role": "admin"
     },
     {
       "id": 2,
       "name": "Usuário",
       "email": "user@passabola.com",
-      "password": "123456",
+      "password": "$2b$10$3ebVplsVXUB6kTot8zP0Ee0jh6RBDc1tQPuNYb73gzLgdlXVeDkzW",
       "role": "user"
     }
   ],
@@ -226,17 +226,6 @@
       "createdAt": 1762295186725
     },
     {
-      "token": "token_1762299251345_atybl60hv",
-      "userId": 1,
-      "user": {
-        "id": 1,
-        "name": "Administrador",
-        "email": "admin@passabola.com",
-        "role": "admin"
-      },
-      "createdAt": 1762299251345
-    },
-    {
       "token": "token_1762363564562_q2enssrl0",
       "userId": 1,
       "user": {
@@ -246,6 +235,28 @@
         "role": "admin"
       },
       "createdAt": 1762363564562
+    },
+    {
+      "token": "token_1762385170330_yx4b0ra0v",
+      "userId": 1,
+      "user": {
+        "id": 1,
+        "name": "Administrador",
+        "email": "admin@passabola.com",
+        "role": "admin"
+      },
+      "createdAt": 1762385170330
+    },
+    {
+      "token": "token_1762391372643_rkvrfesbj1jg83059ri3zg",
+      "userId": 1,
+      "user": {
+        "id": 1,
+        "name": "Administrador",
+        "email": "admin@passabola.com",
+        "role": "admin"
+      },
+      "createdAt": 1762391372643
     }
   ]
 }
